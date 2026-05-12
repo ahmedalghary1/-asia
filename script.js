@@ -69,10 +69,12 @@ const createSvgIcon = (name, source) => {
   return svg;
 };
 
-const initIcons = () => {
-  qsa("[data-lucide]").forEach((icon) => {
-    icon.replaceWith(createSvgIcon(icon.dataset.lucide, icon));
-  });
+const renderIcon = (icon) => {
+  icon.replaceWith(createSvgIcon(icon.dataset.lucide, icon));
+};
+
+const initIcons = (scope = document) => {
+  qsa("[data-lucide]", scope).forEach(renderIcon);
 };
 
 const initReveal = () => {
@@ -108,7 +110,7 @@ const initNavigation = () => {
     const icon = qs("[data-lucide]", toggle);
     if (!icon) return;
     icon.dataset.lucide = open ? "x" : "menu";
-    initIcons();
+    renderIcon(icon);
   };
 
   const closeMenu = () => {
